@@ -2,10 +2,13 @@
 
 ## Installation
 
+This is a forked item from https://github.com/bafi/Telr  
+As I could not used his code directly, I have modified some lines.
+
 You can install the package via composer:
 
 ``` bash
-composer require laravel_payment/telr
+composer require hridoy/telr
 ```
 
 
@@ -23,7 +26,7 @@ You can publish using the following provider
 ```bash
 php artisan vendor:publish --provider="TelrGateway\TelrServiceProvider"
 ```
-After that you can create the telr transaction table by running the migrations command:
+After that you can create the telr transaction table by running the migrations command: *If you are facing issue with the `response` colulmn as json due to mariadb version, you can use longtext
 
 ```bash
 php artisan migrate
