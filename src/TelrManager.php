@@ -59,8 +59,8 @@ class TelrManager
         if (isset($result->error)) {
             throw new \Exception($result->error->message.'. Note: '.$result->error->message);
         }
-        // Dispatch event
-        event(new TelrCreateRequestEvent($createRequest, $result));
+        // Dispatch event do not need this
+        //event(new TelrCreateRequestEvent($createRequest, $result));
 
         return new TelrURL($result->order->url);
     }
