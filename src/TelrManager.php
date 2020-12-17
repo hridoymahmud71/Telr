@@ -59,8 +59,8 @@ class TelrManager
         if (isset($result->error)) {
             throw new \Exception($result->error->message.'. Note: '.$result->error->message);
         }
-        // Dispatch event do not need this
-        //event(new TelrCreateRequestEvent($createRequest, $result));
+        // Dispatch event
+        event(new TelrCreateRequestEvent($createRequest, $result));
 
         return new TelrURL($result->order->url);
     }
@@ -89,22 +89,10 @@ class TelrManager
 
         // Is success transaction
         if (3 === $result->order->status->code && 'paid' === strtolower($result->order->status->text)) {
-            // Mark the transaction as approved
-            $transaction->approve();
-
-            // Dispatch success transaction
-            event(new TelrSuccessTransactionEvent($transaction, $result));
-
-            return $transaction;
+            return true;
         }
 
-        // Mark the transaction as failed
-        $transaction->failed();
-
-        // Dispatch failed transaction
-        event(new TelrFailedTransactionEvent($transaction, $result));
-
-        return $transaction;
+        return false;
     }
 
     /**
